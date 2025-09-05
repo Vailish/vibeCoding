@@ -1,0 +1,38 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(/\\home\\sjkim\\claudCode\\projects\\photo-box/**)",
+      "Read(/\\home\\sjkim\\claudCode\\projects\\photo-box\\backend/**)",
+      "Read(/\\home\\sjkim\\claudCode\\projects\\photo-box\\backend\\routes/**)",
+      "Bash(chmod:*)",
+      "Read(/\\home\\sjkim\\claudCode\\projects\\photo-box\\frontend\\src\\store/**)",
+      "Bash(./start.sh:*)",
+      "Bash(curl:*)",
+      "Bash(docker-compose logs:*)",
+      "Bash(docker-compose:*)",
+      "Read(/\\\\wsl$\\Ubuntu\\home\\sjkim\\claudCode\\projects\\photo-box\\uploads\\WED-241225-JJ/**)",
+      "Read(/\\home\\sjkim\\claudCode\\projects\\photo-box\\frontend\\src\\pages/**)",
+      "Read(/\\home\\sjkim\\claudCode\\projects\\photo-box/**)",
+      "Read(/\\home\\sjkim\\claudCode\\projects\\photo-box\\frontend\\src\\pages/**)",
+      "Read(/\\home\\sjkim\\claudCode\\projects\\photo-box\\frontend\\src\\pages/**)",
+      "Read(/\\tmp/**)",
+      "Read(/\\home\\sjkim\\claudCode\\projects\\photo-box\\frontend\\src\\utils/**)",
+      "Read(/\\home\\sjkim\\claudCode\\projects\\photo-box\\backend/**)",
+      "Read(/\\home\\sjkim\\claudCode\\projects\\photo-box\\backend/**)",
+      "Bash(docker exec:*)",
+      "Read(/\\home\\sjkim\\claudCode\\projects\\photo-box/**)",
+      "Read(/\\\\wsl$\\Ubuntu\\home\\sjkim\\claudCode\\projects\\photo-box\\uploads/**)",
+      "Read(/\\\\wsl$\\Ubuntu\\home\\sjkim\\claudCode\\projects\\photo-box\\uploads\\WED-241225-JJ/**)",
+      "Read(/\\home\\sjkim\\claudCode\\projects\\photo-box\\frontend/**)",
+      "Read(/\\\\wsl$\\Ubuntu\\home\\sjkim\\claudCode\\projects\\photo-box\\backend/**)",
+      "Read(/\\\\wsl$\\Ubuntu\\home\\sjkim\\claudCode\\projects\\photo-box\\backend/**)",
+      "Read(/\\\\wsl$\\Ubuntu\\home\\sjkim\\claudCode\\projects\\photo-box\\frontend\\src\\pages/**)",
+      "Read(/\\\\wsl$\\Ubuntu\\home\\sjkim\\claudCode\\projects\\photo-box\\frontend\\src\\pages/**)",
+      "Bash(cd:*)",
+      "Read(/\\home\\sjkim\\claudCode\\projects\\photo-box\\backend/**)",
+      "Read(/\\home\\sjkim\\claudCode\\projects\\photo-box\\backend/**)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

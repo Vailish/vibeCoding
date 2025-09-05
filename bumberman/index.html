@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>범버맨 게임</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #222;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        
+        .game-container {
+            text-align: center;
+        }
+        
+        h1 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+        
+        canvas {
+            border: 3px solid #fff;
+            background: #2d5016;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+        }
+        
+        .controls {
+            color: #fff;
+            margin-top: 20px;
+        }
+        
+        .controls p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>🧨 범버맨</h1>
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        <div class="controls">
+            <p>🎮 조작법: 방향키로 이동, 스페이스바로 폭탄 설치</p>
+            <p>🎯 목표: 적을 모두 제거하고 탈출하세요!</p>
+        </div>
+    </div>
+    
+    <script src="game.js"></script>
+</body>
+</html>

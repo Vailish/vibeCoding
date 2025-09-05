@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>플립버드 게임</title>
+    <link rel="stylesheet" href="styles/game.css">
+</head>
+<body>
+    <div class="game-container">
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        
+        <div class="game-ui">
+            <div class="score-display">
+                <span>점수: </span>
+                <span id="score">0</span>
+            </div>
+            
+            <div class="item-display">
+                <span>아이템: </span>
+                <span id="itemCount">0</span>
+            </div>
+            
+            <div class="game-over-screen" id="gameOverScreen" style="display: none;">
+                <h2>게임 오버!</h2>
+                <p>최종 점수: <span id="finalScore">0</span></p>
+                <button id="restartBtn">다시 시작</button>
+            </div>
+            
+            <div class="start-screen" id="startScreen">
+                <h1>플립버드</h1>
+                <p>스페이스바 또는 클릭으로 새를 조작하세요</p>
+                <button id="startBtn">게임 시작</button>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <p>조작법: 스페이스바/클릭(점프), X키(무적 사용)</p>
+        </div>
+    </div>
+
+    <script src="scripts/utils.js"></script>
+    <script src="scripts/bird.js"></script>
+    <script src="scripts/pipe.js"></script>
+    <script src="scripts/item.js"></script>
+    <script src="scripts/game.js"></script>
+</body>
+</html>
