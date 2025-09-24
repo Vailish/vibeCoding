@@ -27,7 +27,7 @@ services:
     container_name: travel-backend
     environment:
       NODE_ENV: production
-      PORT: 5000
+      PORT: 5001
       DB_HOST: mariadb
       DB_USER: travel_user
       DB_PASSWORD: travel_password
@@ -35,7 +35,7 @@ services:
       JWT_SECRET: travel-planner-secret-key
       FRONTEND_URL: http://localhost:3000
     ports:
-      - "5000:5000"
+      - "5001:5001"
     depends_on:
       mariadb:
         condition: service_healthy
@@ -50,7 +50,7 @@ services:
       dockerfile: Dockerfile
     container_name: travel-frontend
     environment:
-      VITE_API_URL: http://localhost:5000/api
+      VITE_API_URL: http://localhost:5001/api
     ports:
       - "3000:3000"
     depends_on:

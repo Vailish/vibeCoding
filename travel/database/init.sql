@@ -83,6 +83,9 @@ CREATE TABLE itineraries (
     actual_cost DECIMAL(10,2) DEFAULT 0,
     is_completed BOOLEAN DEFAULT FALSE,
     notes TEXT,
+    latitude DECIMAL(10, 8),
+    longitude DECIMAL(11, 8),
+    location_name VARCHAR(500),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (travel_id) REFERENCES travels(id) ON DELETE CASCADE

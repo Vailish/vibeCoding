@@ -6,6 +6,8 @@ import { Label } from './ui/Label';
 import { Card, CardHeader, CardTitle, CardContent } from './ui/Card';
 import { itineraryService } from '../services/itinerary';
 import { Itinerary, CreateItineraryRequest, UpdateItineraryRequest } from '../types';
+import { formatNumberInput, parseFormattedNumber } from '../utils/format';
+import LocationPicker from './LocationPicker';
 
 interface ItineraryFormProps {
   travelId: number;
@@ -28,7 +30,10 @@ const ItineraryForm: React.FC<ItineraryFormProps> = ({
     estimated_cost: '',
     actual_cost: '',
     is_completed: false,
-    notes: ''
+    notes: '',
+    latitude: undefined as number | undefined,
+    longitude: undefined as number | undefined,
+    location_name: ''
   });
 
   const queryClient = useQueryClient();
@@ -40,10 +45,13 @@ const ItineraryForm: React.FC<ItineraryFormProps> = ({
         description: editingItinerary.description || '',
         start_time: editingItinerary.start_time || '',
         end_time: editingItinerary.end_time || '',
-        estimated_cost: editingItinerary.estimated_cost && editingItinerary.estimated_cost > 0 ? Math.floor(editingItinerary.estimated_cost).toString() : '',
-        actual_cost: editingItinerary.actual_cost && editingItinerary.actual_cost > 0 ? Math.floor(editingItinerary.actual_cost).toString() : '',
+        estimated_cost: editingItinerary.estimated_cost && editingItinerary.estimated_cost > 0 ? formatNumberInput(Math.floor(editingItinerary.estimated_cost).toString()) : '',
+        actual_cost: editingItinerary.actual_cost && editingItinerary.actual_cost > 0 ? formatNumberInput(Math.floor(editingItinerary.actual_cost).toString()) : '',
         is_completed: editingItinerary.is_completed || false,
-        notes: editingItinerary.notes || ''
+        notes: editingItinerary.notes || '',
+        latitude: editingItinerary.latitude,
+        longitude: editingItinerary.longitude,
+        location_name: editingItinerary.location_name || ''
       });
     }
   }, [editingItinerary]);
@@ -91,8 +99,11 @@ const ItineraryForm: React.FC<ItineraryFormProps> = ({
     // 숫자 필드 변환
     const processedData = {
       ...formData,
-      estimated_cost: formData.estimated_cost === '' ? 0 : Number(formData.estimated_cost),
-      actual_cost: formData.actual_cost === '' ? 0 : Number(formData.actual_cost)
+      estimated_cost: parseFormattedNumber(formData.estimated_cost),
+      actual_cost: parseFormattedNumber(formData.actual_cost),
+      latitude: formData.latitude,
+      longitude: formData.longitude,
+      location_name: formData.location_name
     };
 
     if (editingItinerary) {
@@ -111,9 +122,25 @@ const ItineraryForm: React.FC<ItineraryFormProps> = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
+    
+    let formattedValue = value;
+    // 비용 필드의 경우 천 단위 콤마 포맷팅 적용
+    if (name === 'estimated_cost' || name === 'actual_cost') {
+      formattedValue = formatNumberInput(value);
+    }
+    
     setFormData(prev => ({
       ...prev,
-      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
+      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : formattedValue
+    }));
+  };
+
+  const handleLocationChange = (location: { latitude: number; longitude: number; locationName: string }) => {
+    setFormData(prev => ({
+      ...prev,
+      latitude: location.latitude,
+      longitude: location.longitude,
+      location_name: location.locationName
     }));
   };
 
@@ -163,6 +190,14 @@ const ItineraryForm: React.FC<ItineraryFormProps> = ({
               />
             </div>
             
+            {/* 위치 선택 */}
+            <LocationPicker
+              latitude={formData.latitude}
+              longitude={formData.longitude}
+              locationName={formData.location_name}
+              onLocationChange={handleLocationChange}
+            />
+            
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="start_time">시작 시간</Label>
@@ -192,7 +227,7 @@ const ItineraryForm: React.FC<ItineraryFormProps> = ({
                 <Input
                   id="estimated_cost"
                   name="estimated_cost"
-                  type="number"
+                  type="text"
                   value={formData.estimated_cost}
                   onChange={handleChange}
                   placeholder="예상 비용을 입력하세요"
@@ -204,7 +239,7 @@ const ItineraryForm: React.FC<ItineraryFormProps> = ({
                 <Input
                   id="actual_cost"
                   name="actual_cost"
-                  type="number"
+                  type="text"
                   value={formData.actual_cost}
                   onChange={handleChange}
                   placeholder="실제 지출을 입력하세요"

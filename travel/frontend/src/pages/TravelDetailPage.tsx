@@ -11,7 +11,7 @@ import MapView from '../components/MapView';
 import { travelService } from '../services/travel';
 import { useAuthStore } from '../stores/auth';
 import { UpdateTravelRequest } from '../types';
-import { formatBudget } from '../utils/format';
+import { formatBudget, parseFormattedNumber } from '../utils/format';
 
 const TravelDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -24,9 +24,14 @@ const TravelDetailPage: React.FC = () => {
 
   const { data: travel, isLoading, error } = useQuery({
     queryKey: ['travel', id],
-    queryFn: () => travelService.getTravel(Number(id)),
+    queryFn: () => {
+      console.log('TravelDetailPage: Fetching travel with id:', id);
+      return travelService.getTravel(Number(id));
+    },
     enabled: !!id && isAuthenticated
   });
+
+  console.log('TravelDetailPage: Current state', { travel, isLoading, error });
 
   const updateMutation = useMutation({
     mutationFn: ({ id, data }: { id: number; data: UpdateTravelRequest }) =>
@@ -68,7 +73,11 @@ const TravelDetailPage: React.FC = () => {
 
   const handleSave = () => {
     if (id) {
-      updateMutation.mutate({ id: Number(id), data: editData });
+      const processedData = {
+        ...editData,
+        budget: typeof editData.budget === 'string' ? parseFormattedNumber(editData.budget) : editData.budget
+      };
+      updateMutation.mutate({ id: Number(id), data: processedData });
     }
   };
 
@@ -306,10 +315,9 @@ const TravelDetailPage: React.FC = () => {
                       <Label htmlFor="budget">예산 (원)</Label>
                       <Input
                         id="budget"
-                        type="number"
-                        value={editData.budget || 0}
-                        onChange={(e) => setEditData(prev => ({ ...prev, budget: Number(e.target.value) }))}
-                        min="0"
+                        type="text"
+                        value={editData.budget || ''}
+                        onChange={(e) => setEditData(prev => ({ ...prev, budget: parseFloat(e.target.value) || 0 }))}
                       />
                     </div>
                   ) : (

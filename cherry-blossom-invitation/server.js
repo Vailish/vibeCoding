@@ -6,7 +6,7 @@ const multer = require('multer');
 const bodyParser = require('body-parser');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 5002;
 
 // 미들웨어 설정
 app.use(cors());

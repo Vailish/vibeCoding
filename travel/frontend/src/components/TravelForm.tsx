@@ -7,6 +7,7 @@ import { Card, CardHeader, CardTitle, CardContent } from './ui/Card';
 import { travelService } from '../services/travel';
 import { groupService } from '../services/group';
 import { CreateTravelRequest, Group } from '../types';
+import { formatNumberInput } from '../utils/format';
 
 interface TravelFormProps {
   onClose: () => void;
@@ -68,15 +69,26 @@ const TravelForm: React.FC<TravelFormProps> = ({ onClose }) => {
       return;
     }
 
-    createMutation.mutate(formData);
+    const processedData = {
+      ...formData,
+      budget: formData.budget
+    };
+    createMutation.mutate(processedData);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
+    
+    let formattedValue: any = value;
+    // 예산 필드의 경우 숫자로 변환
+    if (name === 'budget') {
+      const numericValue = value.replace(/,/g, '');
+      formattedValue = numericValue === '' ? 0 : Number(numericValue);
+    }
+    
     setFormData(prev => ({
       ...prev,
-      [name]: name === 'budget' ? Number(value) : 
-               name === 'group_id' ? (value === '' ? undefined : Number(value)) : value
+      [name]: name === 'group_id' ? (value === '' ? undefined : Number(value)) : formattedValue
     }));
   };
 
@@ -142,11 +154,10 @@ const TravelForm: React.FC<TravelFormProps> = ({ onClose }) => {
               <Input
                 id="budget"
                 name="budget"
-                type="number"
-                value={formData.budget}
+                type="text"
+                value={formData.budget ? formatNumberInput(formData.budget.toString()) : ''}
                 onChange={handleChange}
                 placeholder="예산을 입력하세요"
-                min="0"
               />
             </div>
             

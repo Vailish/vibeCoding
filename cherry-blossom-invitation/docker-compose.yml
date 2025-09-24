@@ -2,16 +2,16 @@ services:
   cherry-blossom-app:
     build: .
     ports:
-      - "3001:3001"
+      - "5002:5002"
     volumes:
       - ./uploads:/app/uploads
       - ./wedding.db:/app/wedding.db
     environment:
       - NODE_ENV=production
-      - PORT=3001
+      - PORT=5002
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3001/api/wedding-info"]
+      test: ["CMD", "curl", "-f", "http://localhost:5002/api/wedding-info"]
       interval: 30s
       timeout: 10s
       retries: 3

@@ -13,6 +13,9 @@ export interface Itinerary {
   actual_cost: number;
   is_completed: boolean;
   notes?: string;
+  latitude?: number;
+  longitude?: number;
+  location_name?: string;
   created_at: Date;
   updated_at: Date;
 }
@@ -29,6 +32,9 @@ export interface CreateItineraryData {
   actual_cost?: number;
   is_completed?: boolean;
   notes?: string;
+  latitude?: number;
+  longitude?: number;
+  location_name?: string;
 }
 
 export interface ItineraryPlace {
@@ -55,8 +61,8 @@ export const createItinerary = async (itineraryData: CreateItineraryData): Promi
   const conn = await pool.getConnection();
   try {
     const result = await conn.query(
-      `INSERT INTO itineraries (travel_id, date, order_index, title, description, start_time, end_time, estimated_cost, actual_cost, is_completed, notes) 
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO itineraries (travel_id, date, order_index, title, description, start_time, end_time, estimated_cost, actual_cost, is_completed, notes, latitude, longitude, location_name) 
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [
         itineraryData.travel_id,
         itineraryData.date,
@@ -68,7 +74,10 @@ export const createItinerary = async (itineraryData: CreateItineraryData): Promi
         itineraryData.estimated_cost || 0,
         itineraryData.actual_cost || 0,
         itineraryData.is_completed || false,
-        itineraryData.notes || null
+        itineraryData.notes || null,
+        itineraryData.latitude || null,
+        itineraryData.longitude || null,
+        itineraryData.location_name || null
       ]
     );
     return Number(result.insertId);

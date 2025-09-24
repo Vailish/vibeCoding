@@ -14,8 +14,8 @@ RUN apt-get update && apt-get install -y \
 # 루트 디렉토리의 package.json과 package-lock.json 복사
 COPY package*.json ./
 
-# 서버 의존성 설치
-RUN npm ci --only=production
+# 서버 의존성 설치 (sqlite3 네이티브 모듈 재빌드 포함)
+RUN npm ci --only=production && npm rebuild sqlite3
 
 # 클라이언트 디렉토리로 이동하여 클라이언트 빌드
 COPY client/package*.json ./client/
@@ -30,8 +30,8 @@ RUN cd client && npm run build
 # uploads 디렉토리 생성
 RUN mkdir -p uploads
 
-# 포트 3001 노출
-EXPOSE 3001
+# 포트 5002 노출
+EXPOSE 5002
 
 # 프로덕션 환경 설정
 ENV NODE_ENV=production

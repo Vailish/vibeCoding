@@ -1,7 +1,24 @@
-// 금액 포맷팅 함수 (소수점 제거)
+// 금액 포맷팅 함수 (소수점 제거, 천 단위 콤마)
 export const formatCurrency = (amount: number): string => {
   if (amount === 0) return '0원';
-  return `${Math.floor(amount).toLocaleString()}원`;
+  return `${Math.floor(amount).toLocaleString('ko-KR')}원`;
+};
+
+// 숫자 입력값 포맷팅 (천 단위 콤마 추가)
+export const formatNumberInput = (value: string): string => {
+  // 숫자가 아닌 문자 제거 (콤마도 제거)
+  const numericValue = value.replace(/[^0-9]/g, '');
+  if (numericValue === '' || numericValue === '0') return numericValue === '' ? '' : '0';
+  
+  // 앞의 0들 제거 후 천 단위 콤마 추가
+  const cleanNumber = parseInt(numericValue, 10);
+  return cleanNumber.toLocaleString('ko-KR');
+};
+
+// 포맷된 숫자를 실제 숫자로 변환
+export const parseFormattedNumber = (value: string): number => {
+  const numericValue = value.replace(/[^0-9]/g, '');
+  return numericValue === '' ? 0 : parseInt(numericValue);
 };
 
 // 예산 포맷팅 함수

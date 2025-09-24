@@ -135,6 +135,9 @@ export interface Itinerary {
   actual_cost: number;
   is_completed: boolean;
   notes?: string;
+  latitude?: number;
+  longitude?: number;
+  location_name?: string;
   created_at: string;
   updated_at: string;
 }
@@ -150,6 +153,9 @@ export interface CreateItineraryRequest {
   actual_cost?: number;
   is_completed?: boolean;
   notes?: string;
+  latitude?: number;
+  longitude?: number;
+  location_name?: string;
 }
 
 export interface UpdateItineraryRequest {
@@ -161,6 +167,9 @@ export interface UpdateItineraryRequest {
   actual_cost?: number;
   is_completed?: boolean;
   notes?: string;
+  latitude?: number;
+  longitude?: number;
+  location_name?: string;
 }
 
 export interface ItineraryPlace {
